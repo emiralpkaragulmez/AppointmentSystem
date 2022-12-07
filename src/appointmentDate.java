@@ -6,7 +6,6 @@ public class appointmentDate {
     private int minute;
     private String name;
     private boolean available;
-    private static int orderDisplayer = 1;
 
     public appointmentDate(int day, int month, int year, int hour, int minute,String name, boolean available) {
         this.day = day;
@@ -20,16 +19,6 @@ public class appointmentDate {
 
     public String getName() {
         return name;
-    }
-
-    public static void setOrderDisplayer(int orderDisplayer) {
-        appointmentDate.orderDisplayer = orderDisplayer;
-    }
-
-    public void printAvailableName(){
-        if (available == true) {
-            System.out.println(name);
-        }
     }
 
     public int printAvailableNamesForSelectedDate(int day, int month, int year, int x){
