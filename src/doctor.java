@@ -43,7 +43,7 @@ public class doctor {
         for (int year = 2022; year <= 2023; year++){
             for (int month = 1; month <=12; month++){
                 for (int day = 1; day <= 30; day++){
-                    for (int hour = 7; hour <= 15; hour++ ){
+                    for (int hour = 7; hour <= 17; hour++ ){
                         for (int minute = 00; minute <= 30; minute+=30){
                             String name = ("Appointment of " + day + "." + month + "." + year + " - " +
                                     hour + ":" + minute);
@@ -56,19 +56,33 @@ public class doctor {
         }
     }
 
-    public void printAvailableAppointmentsForSelectedDate(int day, int month, int year){
+    public ArrayList returnAvailableAppointmentsForSelectedDate(int day, int month, int year){
+        ArrayList<appointmentDate> availableAppointmentDateForSelectedDate = new ArrayList<appointmentDate>();
         Iterator<appointmentDate> iterator = appointmentDates.listIterator();
+        appointmentDate tempHolder;
+        boolean check;
         int x = 1;
         while (iterator.hasNext()){
-            x = (iterator.next()).printAvailableNamesForSelectedDate(day, month, year, x);
+            tempHolder = iterator.next();
+            check = iterator.next().printAvailableNamesForSelectedDate(day, month, year, x);
+            if (check == true){
+                availableAppointmentDateForSelectedDate.add(tempHolder);
+            }
         }
+        return availableAppointmentDateForSelectedDate;
+    }
 
-    }
-    public void printAvailableAppointmentDate(){
-        Iterator<appointmentDate> iterator = appointmentDates.listIterator();
-        while (iterator.hasNext()){
-            (iterator.next()).printAvailableName();
+    /*public appointmentDate getAppointmentDateByName (String name){
+        Iterator<appointmentDate> iterator2 = appointmentDates.listIterator();
+        appointmentDate tempHolder;
+        boolean appointmentDateFound = false;
+        while (iterator2.hasNext() && !appointmentDateFound){
+            tempHolder = iterator2.next();
+            if (tempHolder.checkByName(name)){
+                appointmentDateFound = true;
+                return tempHolder;
+            }
         }
-        appointmentDate.setOrderDisplayer(1);
-    }
+    }*/
+
 }

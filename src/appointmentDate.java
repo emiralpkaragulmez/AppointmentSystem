@@ -21,12 +21,18 @@ public class appointmentDate {
         return name;
     }
 
-    public int printAvailableNamesForSelectedDate(int day, int month, int year, int x){
+    public boolean printAvailableNamesForSelectedDate(int day, int month, int year, int x){
         if (this.day == day && this.month == month && this.year == year && available == true){
-            System.out.println(x + "-) " + name);
-            x++;
+            return true;
+        }else
+        return false;
+    }
+
+    public boolean checkByName(String name){
+        if (this.name == name){
+            return true;
         }
-        return x;
+        else return false;
     }
 
     public boolean checkAvailability(){

@@ -35,14 +35,12 @@ public class patient {
         return age;
     }
 
-    //public static void createAppointment(String hospitalName, String departmentName, String doctorName, )
-
 
     public void setDiseases(String diseases) {
         this.diseases = diseases;
     }
 
-    public void takeAppointment(){
+    public void addAppointment(){
 
     }
 

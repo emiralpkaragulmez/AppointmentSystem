@@ -9,13 +9,14 @@ public class system {
 
         ArrayList<patient> patients = new ArrayList<patient>();
         ArrayList<admin> admins = new ArrayList<admin>();
+        ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
         admin adminEmir = new admin(339,"emir",123);
         admins.add(adminEmir);
 
 
         hospital bezmialem = new hospital("bezmialem", "valide sultan");
-
+        hospitals.add(bezmialem);
 
 
 
@@ -39,6 +40,7 @@ public class system {
         boolean adminVerified = false;
         int adminId = 0;
         boolean admin = false;
+
         while (!quit){
 
             patientVerified = false;
@@ -116,13 +118,29 @@ public class system {
 
             if (patientVerified){
 
+                Iterator<hospital> iteratorHospital = hospitals.listIterator();
+
+                int x = 1;
+                while (iteratorHospital.hasNext()){
+                    System.out.print(x + "-) " + (iteratorHospital.next()).getName() + "\n");
+                    x++;
+                }
+                System.out.println("Enter your hospital: ");
+                int selectedHospital = scanner.nextInt() - 1;
+                hospital selectedAppointmentHospital = hospitals.get(selectedHospital);
+
+
                 bezmialem.printDepartments();
                 System.out.println("Enter your department: ");
-                int selectedDepartment = scanner.nextInt();
+                int selectedDepartment = scanner.nextInt() - 1;
+                 department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
 
-                bezmialem.departments.get(selectedDepartment - 1).printDoctors();
+
+                bezmialem.departments.get(selectedDepartment).printDoctors();
                 System.out.println("Enter your doctor: ");
-                int selectedDoctor = scanner.nextInt();
+                int selectedDoctor = scanner.nextInt() - 1;
+                doctor selectedAppointmenDoctor = selectedAppointmentDepartment.doctors.get(selectedDoctor);
+
 
                 System.out.println("Enter the date you would like have an appointment.");
                 System.out.print("Enter appointment year (2022 or 2023): ");
@@ -134,9 +152,18 @@ public class system {
 
 
 
-                bezmialem.departments.get(selectedDepartment - 1).doctors.get(selectedDoctor - 1).printAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
+                //selectedAppointmenDoctor.printAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
+                ArrayList<appointmentDate> availableAppointmentDates = selectedAppointmenDoctor.returnAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
+                Iterator<appointmentDate> printNamesOfAppointmenDates = availableAppointmentDates.listIterator();
+                while (printNamesOfAppointmenDates.hasNext()){
+                    System.out.println(printNamesOfAppointmenDates.next().getName());
+                }
                 System.out.println("Enter appointment you would like to choose: ");
                 int chosenAppointmentDate = scanner.nextInt();
+                appointmentDate selectedAppointmentDate;
+
+
+
 
 
             }
