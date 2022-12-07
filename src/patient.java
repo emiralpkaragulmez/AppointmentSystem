@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class patient {
     private String name;
@@ -6,13 +7,13 @@ public class patient {
     private String diseases;
     private long id;
     private int age;
+    ArrayList<appointment> appointments = new ArrayList<appointment>();
 
     public patient(String name, String gender, long id, int age) {
         this.name = name;
         this.gender = gender;
         this.id = id;
         this.age = age;
-        ArrayList<appointment> appointments = new ArrayList<appointment>();
     }
 
     public String getName() {
@@ -40,10 +41,18 @@ public class patient {
         this.diseases = diseases;
     }
 
-    public void addAppointment(){
-
+    public void addAppointment(appointment appointment){
+        appointments.add(appointment);
     }
 
+    public void printAppointments(){
+        Iterator<appointment> appointmentIterator = appointments.listIterator();
+
+        while (appointmentIterator.hasNext()){
+            appointmentIterator.next().appointmentInfo();
+
+        }
+    }
     boolean enterPatient(int id){
         if (this.id == id) {
             return true;

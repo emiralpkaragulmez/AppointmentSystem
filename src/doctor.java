@@ -64,25 +64,11 @@ public class doctor {
         int x = 1;
         while (iterator.hasNext()){
             tempHolder = iterator.next();
-            check = iterator.next().printAvailableNamesForSelectedDate(day, month, year, x);
+            check = tempHolder.chechkAvailableNamesForSelectedDate(day, month, year, x);
             if (check == true){
                 availableAppointmentDateForSelectedDate.add(tempHolder);
             }
         }
         return availableAppointmentDateForSelectedDate;
     }
-
-    /*public appointmentDate getAppointmentDateByName (String name){
-        Iterator<appointmentDate> iterator2 = appointmentDates.listIterator();
-        appointmentDate tempHolder;
-        boolean appointmentDateFound = false;
-        while (iterator2.hasNext() && !appointmentDateFound){
-            tempHolder = iterator2.next();
-            if (tempHolder.checkByName(name)){
-                appointmentDateFound = true;
-                return tempHolder;
-            }
-        }
-    }*/
-
 }

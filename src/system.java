@@ -32,7 +32,7 @@ public class system {
         bezmialem.departments.get(2).addDoctor("mustafa", 40,10,"erkek");
         bezmialem.departments.get(2).addDoctor("ayberk", 40,10,"erkek");
 
-
+        patient selectedPatient = null;
         boolean quit = false;
         int patientId = 0;
         boolean patientVerified = false;
@@ -43,6 +43,7 @@ public class system {
 
         while (!quit){
 
+            selectedPatient = null;
             patientVerified = false;
             createNewPatient = false;
             adminVerified = false;
@@ -64,14 +65,18 @@ public class system {
                     Iterator<patient> patientsIterator = patients.listIterator();
 
                     while (patientsIterator.hasNext()) {
-                        if (patientsIterator.next().enterPatient(patientId)) {
+                        patient tempPatient = patientsIterator.next();
+                        if (tempPatient.enterPatient(patientId)) {
                             patientVerified = true;
+                            selectedPatient = tempPatient;
+                            System.out.println("Patient selected.");
+                            break;
                         }
                     }
-                    if (patientVerified) {
+                    /*if (patientVerified) {
                         System.out.println("Patient selected.");
                         break;
-                    }
+                    }*/
                     System.out.println("Please fill information section to take an appointment.");
                     createNewPatient = true;
                     break;
@@ -112,8 +117,8 @@ public class system {
                 inputGender = scanner.nextLine();
 
                 patientVerified = true;
-
-                patients.add(new patient(inputName, inputGender, patientId, inputAge));
+                selectedPatient = new patient(inputName, inputGender, patientId, inputAge);
+                patients.add(selectedPatient);
             }
 
             if (patientVerified){
@@ -152,20 +157,23 @@ public class system {
 
 
 
-                //selectedAppointmenDoctor.printAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
+
                 ArrayList<appointmentDate> availableAppointmentDates = selectedAppointmenDoctor.returnAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
                 Iterator<appointmentDate> printNamesOfAppointmenDates = availableAppointmentDates.listIterator();
+                int order = 1;
                 while (printNamesOfAppointmenDates.hasNext()){
-                    System.out.println(printNamesOfAppointmenDates.next().getName());
+                    System.out.println(order + "-) " + printNamesOfAppointmenDates.next().getName());
+                    order++;
                 }
                 System.out.println("Enter appointment you would like to choose: ");
                 int chosenAppointmentDate = scanner.nextInt();
-                appointmentDate selectedAppointmentDate;
+                appointmentDate selectedAppointmentDate = availableAppointmentDates.get(chosenAppointmentDate);
 
+                selectedPatient.addAppointment(new appointment(selectedAppointmentDate.getName(),
+                        selectedAppointmentHospital.getName(),selectedAppointmentDepartment.getName(),
+                        selectedAppointmenDoctor.getName(), selectedAppointmentDate.getAppointmentDate()));
 
-
-
-
+                selectedPatient.printAppointments();
             }
 
         }

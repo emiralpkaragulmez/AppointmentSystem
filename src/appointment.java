@@ -32,4 +32,8 @@ public class appointment {
     public String getAppointmentDate() {
         return appointmentDate;
     }
+
+    public  void appointmentInfo(){
+        System.out.println("You have an appointment in " + departmentName + " at " + appointmentDate + " .");
+    }
 }
