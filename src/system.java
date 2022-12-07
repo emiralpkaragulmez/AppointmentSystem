@@ -33,7 +33,7 @@ public class system {
 
         patient selectedPatient = null;
         boolean quit = false;
-        int patientId = 0;
+        long patientId = 0;
         boolean patientVerified = false;
         boolean createNewPatient = false;
         boolean adminVerified = false;
@@ -62,8 +62,22 @@ public class system {
             switch (chosenOption){
 
                 case 1:
-                    System.out.print("Enter your id: ");
-                    patientId = scanner.nextInt();
+
+
+                    int counter =0;
+                   while (counter != 11) {
+                       System.out.print("Enter your id: ");
+
+                       patientId = scanner.nextLong();
+
+                       while (patientId > 0) {
+                           patientId /= 10;
+                           counter++;
+                       }
+
+                       if (counter != 11)
+                           System.out.println("Id must 11 digit long.");
+                   }
 
                     Iterator<patient> patientsIterator = patients.listIterator();
 

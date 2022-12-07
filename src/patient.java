@@ -59,7 +59,7 @@ public class patient {
             order++;
         }
     }
-    boolean enterPatient(int id){
+    boolean enterPatient(long id){
         if (this.id == id) {
             return true;
         }

@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class admin extends adminPanel{
-    int id;
+    long id;
     String name;
     int password;
     ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
-    public admin(int id, String name, int password) {
+    public admin(long id, String name, int password) {
         this.id = id;
         this.name = name;
         this.password = password;
     }
 
-    boolean enterAdmin(int id,int password){
+    boolean enterAdmin(long id,int password){
         if (this.id == id && this.password == password) {
             return true;
         }
