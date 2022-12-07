@@ -1,7 +1,11 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class admin extends adminPanel{
     int id;
     String name;
     int password;
+    ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
     public admin(int id, String name, int password) {
         this.id = id;
@@ -14,6 +18,25 @@ public class admin extends adminPanel{
             return true;
         }
         else return false;
+    }
+
+    void addHospital(String hospitalName, String founderName){
+        hospitals.add(new hospital(hospitalName,founderName));
+    }
+
+    void addDepartment(String hospitalName, String name){
+        Iterator<hospital> hospitalIterator = hospitals.listIterator();
+
+        while (hospitalIterator.hasNext()){
+            hospital tempHolder = hospitalIterator.next();
+            if (tempHolder.getName() == hospitalName){
+                tempHolder.departments.add(new department(name));
+            }
+        }
+    }
+
+    void addDoctor(){
+
     }
 
 }

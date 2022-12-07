@@ -32,6 +32,10 @@ public class appointmentDate {
         return (day + "." + month + "." + year);
     }
 
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     public boolean checkAvailability(){
         return available;
     }

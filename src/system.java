@@ -19,7 +19,6 @@ public class system {
         hospitals.add(bezmialem);
 
 
-
         bezmialem.addDepartment("Dahiliye"); // index 0 department
         bezmialem.addDepartment("KBB");      // index 1 department
         bezmialem.addDepartment("Üroloji");  // index 2 department
@@ -69,14 +68,12 @@ public class system {
                         if (tempPatient.enterPatient(patientId)) {
                             patientVerified = true;
                             selectedPatient = tempPatient;
-                            System.out.println("Patient selected.");
-                            break;
                         }
                     }
-                    /*if (patientVerified) {
+                    if (patientVerified) {
                         System.out.println("Patient selected.");
                         break;
-                    }*/
+                    }
                     System.out.println("Please fill information section to take an appointment.");
                     createNewPatient = true;
                     break;
@@ -144,36 +141,52 @@ public class system {
                 bezmialem.departments.get(selectedDepartment).printDoctors();
                 System.out.println("Enter your doctor: ");
                 int selectedDoctor = scanner.nextInt() - 1;
-                doctor selectedAppointmenDoctor = selectedAppointmentDepartment.doctors.get(selectedDoctor);
+                doctor selectedAppointmentDoctor = selectedAppointmentDepartment.doctors.get(selectedDoctor);
 
 
                 System.out.println("Enter the date you would like have an appointment.");
                 System.out.print("Enter appointment year (2022 or 2023): ");
-                int chosenAppointmenYear = scanner.nextInt();
+                int chosenAppointmentYear = scanner.nextInt();
                 System.out.print("Enter appointment month (1 to 12): ");
-                int chosenAppointmenMonth = scanner.nextInt();
+                int chosenAppointmentMonth = scanner.nextInt();
                 System.out.print("Enter appointment day (1 to 30): ");
-                int chosenAppointmenDay = scanner.nextInt();
+                int chosenAppointmentDay = scanner.nextInt();
 
 
 
 
-                ArrayList<appointmentDate> availableAppointmentDates = selectedAppointmenDoctor.returnAvailableAppointmentsForSelectedDate(chosenAppointmenDay,chosenAppointmenMonth,chosenAppointmenYear);
-                Iterator<appointmentDate> printNamesOfAppointmenDates = availableAppointmentDates.listIterator();
+                ArrayList<appointmentDate> availableAppointmentDates = selectedAppointmentDoctor.returnAvailableAppointmentsForSelectedDate(chosenAppointmentDay,chosenAppointmentMonth,chosenAppointmentYear);
+                Iterator<appointmentDate> printNamesOfAppointmentDates = availableAppointmentDates.listIterator();
                 int order = 1;
-                while (printNamesOfAppointmenDates.hasNext()){
-                    System.out.println(order + "-) " + printNamesOfAppointmenDates.next().getName());
+                while (printNamesOfAppointmentDates.hasNext()){
+                    System.out.println(order + "-) " + printNamesOfAppointmentDates.next().getName());
                     order++;
                 }
                 System.out.println("Enter appointment you would like to choose: ");
                 int chosenAppointmentDate = scanner.nextInt();
                 appointmentDate selectedAppointmentDate = availableAppointmentDates.get(chosenAppointmentDate);
+                selectedAppointmentDate.setAvailable(false);
 
                 selectedPatient.addAppointment(new appointment(selectedAppointmentDate.getName(),
                         selectedAppointmentHospital.getName(),selectedAppointmentDepartment.getName(),
-                        selectedAppointmenDoctor.getName(), selectedAppointmentDate.getAppointmentDate()));
+                        selectedAppointmentDoctor.getName(), selectedAppointmentDate.getAppointmentDate()));
 
-                selectedPatient.printAppointments();
+                System.out.println("Would you like to print your appointments' information?");
+
+                boolean pass = false;
+
+                while (!pass) {
+                    String answer = scanner.nextLine();
+
+                    if (answer.equals("Yes")) {
+                        selectedPatient.printAppointments();
+                        pass = true;
+                    }
+                    else if (answer.equals("No"))
+                        pass = true;
+                    else
+                        System.out.println("Please answer with Yes or No.");
+                }
             }
 
         }

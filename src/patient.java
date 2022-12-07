@@ -47,10 +47,12 @@ public class patient {
 
     public void printAppointments(){
         Iterator<appointment> appointmentIterator = appointments.listIterator();
+        int order = 1;
 
         while (appointmentIterator.hasNext()){
+            System.out.print(order + "-) ");
             appointmentIterator.next().appointmentInfo();
-
+            order++;
         }
     }
     boolean enterPatient(int id){

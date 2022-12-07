@@ -7,7 +7,7 @@ public class hospital {
     private int departmentsNumber = 0;
     ArrayList<department> departments = new ArrayList<department>();
 
-    public hospital(String name, String founder) {
+     hospital(String name, String founder) {
         this.name = name;
         this.founder = founder;
 
@@ -40,4 +40,8 @@ public class hospital {
             x++;
         }
     }
+
+
+
+
 }
