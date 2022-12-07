@@ -39,9 +39,13 @@ public class system {
         boolean adminVerified = false;
         int adminId = 0;
         boolean admin = false;
+        boolean takeAppointmentSelected = false;
+        boolean viewInformation = false;
 
         while (!quit){
 
+            viewInformation = false;
+            takeAppointmentSelected = false;
             selectedPatient = null;
             patientVerified = false;
             createNewPatient = false;
@@ -49,7 +53,7 @@ public class system {
             adminId = 0;
             admin = false;
 
-            System.out.print("Enter your choice: \n" + "\t1-) Take An Appointment\n" + "\t2-) Admin panel.\n\t" );
+            System.out.print("Enter your choice: \n" + "\t1-) Patient Login\n" + "\t2-) Admin login.\n\t" );
             int chosenOption = scanner.nextInt();
 
 
@@ -119,6 +123,24 @@ public class system {
             }
 
             if (patientVerified){
+                System.out.print("Enter your choice: \n" + "\t1-) Take an appointment.\n" + "\t2-) View appointments' information.\n\t" );
+                boolean pass = false;
+                while (!pass){
+                int answer = scanner.nextInt();
+                if (answer == 1){
+                    takeAppointmentSelected = true;
+                    pass = true;
+                }
+                else if (answer == 2){
+                    viewInformation = true;
+                    pass = true;
+                }
+                else
+                    System.out.println("Please enter only digit.");
+                }
+            }
+
+            if (takeAppointmentSelected){
 
                 Iterator<hospital> iteratorHospital = hospitals.listIterator();
 
@@ -189,6 +211,37 @@ public class system {
                 }
             }
 
+            if (viewInformation){
+                selectedPatient.printAppointments();
+
+                System.out.println("Would you like to cancel your appointment? ");
+                boolean pass = false;
+                while (!pass){
+                    String answer = scanner.nextLine();
+                    if (answer.equals("Yes")){
+
+                        selectedPatient.printAppointments();
+                        System.out.println("Which Appointment would you like to cancel?");
+                        boolean pass2 = false;
+                        while (!pass2){
+                            int answer2 = scanner.nextInt();
+                            int appointmentCount = selectedPatient.appointments.size();
+                            if (answer2 > 0 && answer2 < appointmentCount){
+                                pass2 = true;
+                            }
+                            else
+                                System.out.println("Please enter valid digit between 0 - " + appointmentCount + "." );
+                        }
+
+                        pass = true;
+                    }
+                    else if (answer.equals("No")){
+                        pass = true;
+                    }
+                    else
+                        System.out.println("Please answer with only 'Yes' or 'No'");
+                }
+            }
         }
 
     }

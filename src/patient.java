@@ -45,6 +45,7 @@ public class patient {
         appointments.add(appointment);
     }
 
+
     public void printAppointments(){
         Iterator<appointment> appointmentIterator = appointments.listIterator();
         int order = 1;
