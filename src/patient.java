@@ -44,6 +44,9 @@ public class patient {
     public void addAppointment(appointment appointment){
         appointments.add(appointment);
     }
+    public void deleteAppointment(int select){
+        appointments.remove(select);
+    }
 
 
     public void printAppointments(){

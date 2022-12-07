@@ -226,8 +226,9 @@ public class system {
                         while (!pass2){
                             int answer2 = scanner.nextInt();
                             int appointmentCount = selectedPatient.appointments.size();
-                            if (answer2 > 0 && answer2 < appointmentCount){
+                            if (answer2 > 0 && answer2 <= appointmentCount){
                                 pass2 = true;
+                                selectedPatient.deleteAppointment(answer2-1);
                             }
                             else
                                 System.out.println("Please enter valid digit between 0 - " + appointmentCount + "." );
