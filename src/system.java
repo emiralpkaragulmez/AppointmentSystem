@@ -1,8 +1,23 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+
+
 public class system {
 
+    public enum Gender {
+        MALE, FEMALE;
+
+        public String toString() {
+            switch (this) {
+                case MALE:
+                    return "Male";
+                case FEMALE:
+                    return "Female";
+            }
+            return null;
+        }
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -34,7 +49,7 @@ public class system {
 
 
         boolean quit = false;
-        int patientId = 0;
+        long patientId = 0;
         boolean patientVerified = false;
         boolean createNewPatient = false;
         boolean adminVerified = false;
@@ -59,23 +74,35 @@ public class system {
 
                 case 1:
                     System.out.print("Enter your id: ");
-                    patientId = scanner.nextInt();
+                    int counter =0;
 
-                    Iterator<patient> patientsIterator = patients.listIterator();
-
-                    while (patientsIterator.hasNext()) {
-                        if (patientsIterator.next().enterPatient(patientId)) {
-                            patientVerified = true;
-                        }
+                    patientId = scanner.nextLong();
+                    while(patientId > 0) {
+                        patientId /= 10;
+                        counter++;
                     }
-                    if (patientVerified) {
-                        System.out.println("Patient selected.");
+                    if(counter ==11)
+                    {
+                        Iterator<patient> patientsIterator = patients.listIterator();
+
+                        while (patientsIterator.hasNext()) {
+                            if (patientsIterator.next().enterPatient(patientId)) {
+                                patientVerified = true;
+                                System.out.println("Patient selected.");
+                                break;
+                            }
+                        }
+                        System.out.println("Please fill information section to take an appointment.");
+                        createNewPatient = true;
                         break;
                     }
-                    System.out.println("Please fill information section to take an appointment.");
-                    createNewPatient = true;
-                    break;
-                case 2:
+                    else
+                    {
+                        System.out.println("You have entered wrong number. You have to enter number with 11 digits.");
+                        continue;
+                    }
+
+                    case 2:
                     System.out.print("Enter your admin id: ");
                     adminId = scanner.nextInt();
                     System.out.print("\nEnter your password: ");
@@ -111,9 +138,16 @@ public class system {
                 scanner.nextLine();
                 inputGender = scanner.nextLine();
 
-                patientVerified = true;
+                if(Gender.MALE.equals("Male") || inputGender.toString().equals("Female"))
+                {
+                    patientVerified = true;
 
-                patients.add(new patient(inputName, inputGender, patientId, inputAge));
+                    patients.add(new patient(inputName, inputGender, patientId, inputAge));
+                }
+                else
+                {
+                    System.out.println("Enter only if Male or Female.");
+                }
             }
 
             if (patientVerified){
