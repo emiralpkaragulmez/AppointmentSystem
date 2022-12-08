@@ -15,6 +15,8 @@ public class system {
         admins.add(adminEmir);
 
 
+
+
         hospital bezmialem = new hospital("bezmialem", "valide sultan");
         hospitals.add(bezmialem);
 
@@ -41,6 +43,7 @@ public class system {
         boolean admin = false;
         boolean takeAppointmentSelected = false;
         boolean viewInformation = false;
+        admin selectedAdmin = null;
 
         while (!quit){
 
@@ -52,9 +55,11 @@ public class system {
             adminVerified = false;
             adminId = 0;
             admin = false;
+            selectedAdmin = null;
 
             System.out.print("Enter your choice: \n" + "\t1-) Patient Login\n" + "\t2-) Admin login.\n\t" );
             int chosenOption = scanner.nextInt();
+
 
 
 
@@ -65,19 +70,19 @@ public class system {
 
 
                     int counter =0;
-                   while (counter != 11) {
-                       System.out.print("Enter your id: ");
+                    while (counter != 11) {
+                        System.out.print("Enter your id: ");
 
-                       patientId = scanner.nextLong();
+                        patientId = scanner.nextLong();
 
-                       while (patientId > 0) {
-                           patientId /= 10;
-                           counter++;
-                       }
+                        while (patientId > 0) {
+                            patientId /= 10;
+                            counter++;
+                        }
 
-                       if (counter != 11)
-                           System.out.println("Id must 11 digit long.");
-                   }
+                        if (counter != 11)
+                            System.out.println("Id must 11 digit long.");
+                    }
 
                     Iterator<patient> patientsIterator = patients.listIterator();
 
@@ -104,8 +109,10 @@ public class system {
                     Iterator<admin> adminsIterator = admins.listIterator();
 
                     while (adminsIterator.hasNext()) {
-                        admin = adminsIterator.next().enterAdmin(adminId, adminPassword);
+                        admin tempAdmin = adminsIterator.next();
+                        admin = tempAdmin.enterAdmin(adminId, adminPassword);
                         if (admin == true) {
+                            selectedAdmin = tempAdmin;
                             System.out.println("Information are correct");
                             adminVerified = true;
                         }
@@ -140,17 +147,17 @@ public class system {
                 System.out.print("Enter your choice: \n" + "\t1-) Take an appointment.\n" + "\t2-) View appointments' information.\n\t" );
                 boolean pass = false;
                 while (!pass){
-                int answer = scanner.nextInt();
-                if (answer == 1){
-                    takeAppointmentSelected = true;
-                    pass = true;
-                }
-                else if (answer == 2){
-                    viewInformation = true;
-                    pass = true;
-                }
-                else
-                    System.out.println("Please enter only digit.");
+                    int answer = scanner.nextInt();
+                    if (answer == 1){
+                        takeAppointmentSelected = true;
+                        pass = true;
+                    }
+                    else if (answer == 2){
+                        viewInformation = true;
+                        pass = true;
+                    }
+                    else
+                        System.out.println("Please enter only digit.");
                 }
             }
 
@@ -171,7 +178,7 @@ public class system {
                 bezmialem.printDepartments();
                 System.out.println("Enter your department: ");
                 int selectedDepartment = scanner.nextInt() - 1;
-                 department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
+                department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
 
 
                 bezmialem.departments.get(selectedDepartment).printDoctors();
@@ -256,6 +263,12 @@ public class system {
                     else
                         System.out.println("Please answer with only 'Yes' or 'No'");
                 }
+            }
+
+            if (adminVerified){
+                System.out.print("Enter your choice: \n" + "\t1-) Add hospital.\n" + "\t2-) Add .\n\t" );
+
+
             }
         }
 

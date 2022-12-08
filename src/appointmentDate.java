@@ -25,7 +25,7 @@ public class appointmentDate {
         if (this.day == day && this.month == month && this.year == year && available == true){
             return true;
         }else
-        return false;
+            return false;
     }
 
     public String getAppointmentDate(){
