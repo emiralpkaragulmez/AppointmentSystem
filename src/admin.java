@@ -33,15 +33,20 @@ public class admin extends adminPanel{
 
         hospitals.add(new hospital(hospitalName,founderName));
     }
-    void addDepartment(){
-        Iterator<hospital> iteratorHospital = hospitals.listIterator();
-        System.out.println("Which hospital are you going add department?");
 
-        int x = 1;
-        while (iteratorHospital.hasNext()){
-            System.out.print(x + "-) " + (iteratorHospital.next()).getName() + "\n");
-            x++;
-        }
+    void deleteHospital(){
+        System.out.println("Which hospital are you going delete?");
+
+        printHospitals();
+
+        int answer = scanner.nextInt();
+        hospitals.remove(answer - 1);
+    }
+
+
+    void addDepartment(){
+        System.out.println("Which hospital are you going add department?");
+        printHospitals();
 
         int answer = scanner.nextInt();
 
@@ -52,16 +57,23 @@ public class admin extends adminPanel{
         hospitals.get(answer - 1).addDepartment(departmentName);
     }
 
+    void deleteDepartment(){
+        System.out.println("Select hospital: ");
+        printHospitals();
+
+        int answer = scanner.nextInt();
+
+        System.out.println("Which department are you going to delete?");
+        hospitals.get(answer - 1).printDepartments();
+
+        int answer2 = scanner.nextInt();
+        hospitals.get(answer - 1).departments.remove(answer2 - 1);
+    }
 
     void addDoctor(){
-        Iterator<hospital> hospitalIterator = hospitals.listIterator();
         System.out.println("Select hospital.");
 
-        int x = 1;
-        while (hospitalIterator.hasNext()){
-            System.out.print(x + "-) " + (hospitalIterator.next()).getName() + "\n");
-            x++;
-        }
+        printHospitals();
 
         int hospitalAnswer = scanner.nextInt();
 
@@ -84,11 +96,37 @@ public class admin extends adminPanel{
         scanner.nextLine();
         String doctorGender = scanner.nextLine();
 
-        //hospitals.get(hospitalAnswer - 1).departments.get(departmentAnswer - 1).addDoctor(nameOfDoctor, doctorAge, doctorExperience, doctorGender);
+        hospitals.get(hospitalAnswer - 1).departments.get(departmentAnswer - 1).addDoctor(nameOfDoctor, doctorAge, doctorExperience, doctorGender);
     }
 
+    void deleteDoctor(){
 
+        System.out.println("Select hospital: ");
+        printHospitals();
 
+        int answer = scanner.nextInt();
 
+        System.out.println("Select department: ");
+        hospitals.get(answer - 1).printDepartments();
+
+        int answer2 = scanner.nextInt();
+
+        System.out.println("Which doctor are you going to delete?");
+        hospitals.get(answer - 1).departments.get(answer2 - 1).printDoctors();
+        int answer3 = scanner.nextInt();
+
+        hospitals.get(answer - 1).departments.get(answer2 - 1).doctors.remove(answer3 - 1);
+    }
+
+    void printHospitals(){
+        Iterator<hospital> Iterator = hospitals.listIterator();
+
+        int x = 1;
+        while (Iterator.hasNext()){
+            System.out.print(x + "-) " + (Iterator.next()).getName() + "\n");
+            x++;
+        }
+
+    }
 
 }
