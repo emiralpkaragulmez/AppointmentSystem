@@ -21,7 +21,7 @@ public class appointmentDate {
         return name;
     }
 
-    public boolean chechkAvailableNamesForSelectedDate(int day, int month, int year, int x){
+    public boolean checkAvailableNamesForSelectedDate(int day, int month, int year, int x){
         if (this.day == day && this.month == month && this.year == year && available == true){
             return true;
         }else

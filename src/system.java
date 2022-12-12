@@ -6,32 +6,11 @@ public class system {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        ArrayList<patient> patients = new ArrayList<patient>();
-        ArrayList<admin> admins = new ArrayList<admin>();
-        ArrayList<hospital> hospitals = new ArrayList<hospital>();
-
-        admin adminEmir = new admin(339,"emir",123);
-        admins.add(adminEmir);
+        admin adminSystem = new admin(111,"system",111);
+        adminSystem.admins.add(adminSystem);
+        adminSystem.insertHospitalSample();
 
 
-
-
-        hospital bezmialem = new hospital("bezmialem", "valide sultan");
-        hospitals.add(bezmialem);
-
-
-        bezmialem.addDepartment("Dahiliye"); // index 0 department
-        bezmialem.addDepartment("KBB");      // index 1 department
-        bezmialem.addDepartment("Üroloji");  // index 2 department
-
-
-        bezmialem.departments.get(0).addDoctor("muzaffer", 40,10,"erkek");
-        bezmialem.departments.get(0).addDoctor("ayşe", 40,10,"erkek");
-        bezmialem.departments.get(1).addDoctor("asya", 40,10,"erkek");
-        bezmialem.departments.get(1).addDoctor("emir", 40,10,"erkek");
-        bezmialem.departments.get(2).addDoctor("mustafa", 40,10,"erkek");
-        bezmialem.departments.get(2).addDoctor("ayberk", 40,10,"erkek");
 
         patient selectedPatient = null;
         boolean quit = false;
@@ -44,6 +23,8 @@ public class system {
         boolean takeAppointmentSelected = false;
         boolean viewInformation = false;
         admin selectedAdmin = null;
+
+
 
         while (!quit){
 
@@ -69,8 +50,9 @@ public class system {
                 case 1:
 
 
-                    int counter =0;
+                    int counter = 0;
                     while (counter != 11) {
+                        counter = 0;
                         System.out.print("Enter your id: ");
 
                         patientId = scanner.nextLong();
@@ -84,7 +66,7 @@ public class system {
                             System.out.println("Id must 11 digit long.");
                     }
 
-                    Iterator<patient> patientsIterator = patients.listIterator();
+                    Iterator<patient> patientsIterator = adminSystem.patients.listIterator();
 
                     while (patientsIterator.hasNext()) {
                         patient tempPatient = patientsIterator.next();
@@ -106,7 +88,7 @@ public class system {
                     System.out.print("\nEnter your password: ");
                     int adminPassword = scanner.nextInt();
 
-                    Iterator<admin> adminsIterator = admins.listIterator();
+                    Iterator<admin> adminsIterator = adminSystem.admins.listIterator();
 
                     while (adminsIterator.hasNext()) {
                         admin tempAdmin = adminsIterator.next();
@@ -129,7 +111,7 @@ public class system {
                 String inputName;
                 int inputAge;
 
-                System.out.print("Please enter your name: ");
+                System.out.print("Please enter your full name: ");
                 scanner.nextLine();
                 inputName = scanner.nextLine();
                 System.out.print("Please enter your age: ");
@@ -140,7 +122,7 @@ public class system {
 
                 patientVerified = true;
                 selectedPatient = new patient(inputName, inputGender, patientId, inputAge);
-                patients.add(selectedPatient);
+                adminSystem.patients.add(selectedPatient);
             }
 
             if (patientVerified){
@@ -163,25 +145,25 @@ public class system {
 
             if (takeAppointmentSelected){
 
-                Iterator<hospital> iteratorHospital = hospitals.listIterator();
+                Iterator<hospital> iteratorHospital = adminSystem.hospitals.listIterator();
 
+                System.out.println("Enter your hospital: ");
                 int x = 1;
                 while (iteratorHospital.hasNext()){
                     System.out.print(x + "-) " + (iteratorHospital.next()).getName() + "\n");
                     x++;
                 }
-                System.out.println("Enter your hospital: ");
                 int selectedHospital = scanner.nextInt() - 1;
-                hospital selectedAppointmentHospital = hospitals.get(selectedHospital);
+                hospital selectedAppointmentHospital = adminSystem.hospitals.get(selectedHospital);
 
 
-                bezmialem.printDepartments();
+                adminSystem.hospitals.get(selectedHospital).printDepartments();
                 System.out.println("Enter your department: ");
                 int selectedDepartment = scanner.nextInt() - 1;
                 department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
 
 
-                bezmialem.departments.get(selectedDepartment).printDoctors();
+                selectedAppointmentDepartment.printDoctors();
                 System.out.println("Enter your doctor: ");
                 int selectedDoctor = scanner.nextInt() - 1;
                 doctor selectedAppointmentDoctor = selectedAppointmentDepartment.doctors.get(selectedDoctor);
@@ -233,40 +215,80 @@ public class system {
             }
 
             if (viewInformation){
-                selectedPatient.printAppointments();
+                if (selectedPatient.getAppointmentCount() > 0){
 
-                System.out.println("Would you like to cancel your appointment? ");
-                boolean pass = false;
-                while (!pass){
-                    String answer = scanner.nextLine();
-                    if (answer.equals("Yes")){
+                    selectedPatient.printAppointments();
 
-                        selectedPatient.printAppointments();
-                        System.out.println("Which Appointment would you like to cancel?");
-                        boolean pass2 = false;
-                        while (!pass2){
-                            int answer2 = scanner.nextInt();
-                            int appointmentCount = selectedPatient.appointments.size();
-                            if (answer2 > 0 && answer2 <= appointmentCount){
-                                pass2 = true;
-                                selectedPatient.deleteAppointment(answer2-1);
+                    System.out.println("Would you like to cancel your appointment? ");
+                    boolean pass = false;
+                    while (!pass){
+                        String answer = scanner.nextLine();
+                        if (answer.equals("Yes")){
+
+                            selectedPatient.printAppointments();
+                            System.out.println("Which Appointment would you like to cancel?");
+                            boolean pass2 = false;
+                            while (!pass2){
+                                int answer2 = scanner.nextInt();
+                                int appointmentCount = selectedPatient.appointments.size();
+                                if (answer2 > 0 && answer2 <= appointmentCount){
+                                    pass2 = true;
+                                    selectedPatient.deleteAppointment(answer2-1);
+                                }
+                                else
+                                    System.out.println("Please enter valid digit between 0 - " + appointmentCount + "." );
                             }
-                            else
-                                System.out.println("Please enter valid digit between 0 - " + appointmentCount + "." );
-                        }
 
-                        pass = true;
+                            pass = true;
+                        }
+                        else if (answer.equals("No")){
+                            pass = true;
+                        }
+                        else
+                            System.out.println("Please answer with only 'Yes' or 'No'");
                     }
-                    else if (answer.equals("No")){
-                        pass = true;
-                    }
-                    else
-                        System.out.println("Please answer with only 'Yes' or 'No'");
+
                 }
+
+                else{
+                    System.out.println("You dont have any appointment.");
+
+                }
+
             }
 
             if (adminVerified){
-                System.out.print("Enter your choice: \n" + "\t1-) Add hospital.\n" + "\t2-) Add .\n\t" );
+                System.out.print("Enter your choice: \n\t1-) Make changes in the database.\n \t2-) Quit system.\n" );
+                int choice = scanner.nextInt();
+
+                switch (choice){
+                    case 1:
+                        System.out.println("Enter your choice: \n\t1-) Add new hospital.\n \t2-) Delete hospital.\n" +
+                                "\t3-) Add new department.\n\t4-) Delete department.\n\t5-) Add new doctor.\n" +
+                                "\t6-) Delete doctor.");
+
+                        int choice2 = scanner.nextInt();
+
+                        switch (choice2){
+                            case 1:
+                                selectedAdmin.addDoctor();
+                            case 2:
+                                selectedAdmin.deleteHospital();
+                            case 3:
+                                selectedAdmin.addDepartment();
+                            case 4:
+                                selectedAdmin.deleteDepartment();
+                            case 5:
+                                selectedAdmin.addDoctor();
+                            case 6:
+                                selectedAdmin.deleteDoctor();
+                        }
+
+                    case 2:
+                        quit = true;
+
+
+                }
 
 
             }

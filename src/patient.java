@@ -7,6 +7,7 @@ public class patient {
     private String diseases;
     private long id;
     private int age;
+    private int appointmentCount = 0;
     ArrayList<appointment> appointments = new ArrayList<appointment>();
 
     public patient(String name, String gender, long id, int age) {
@@ -36,6 +37,9 @@ public class patient {
         return age;
     }
 
+    public int getAppointmentCount() {
+        return appointmentCount;
+    }
 
     public void setDiseases(String diseases) {
         this.diseases = diseases;
@@ -43,9 +47,11 @@ public class patient {
 
     public void addAppointment(appointment appointment){
         appointments.add(appointment);
+        appointmentCount++;
     }
     public void deleteAppointment(int select){
         appointments.remove(select);
+        appointmentCount--;
     }
 
 

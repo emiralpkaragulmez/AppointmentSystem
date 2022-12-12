@@ -64,7 +64,7 @@ public class doctor {
         int x = 1;
         while (iterator.hasNext()){
             tempHolder = iterator.next();
-            check = tempHolder.chechkAvailableNamesForSelectedDate(day, month, year, x);
+            check = tempHolder.checkAvailableNamesForSelectedDate(day, month, year, x);
             if (check == true){
                 availableAppointmentDateForSelectedDate.add(tempHolder);
             }
