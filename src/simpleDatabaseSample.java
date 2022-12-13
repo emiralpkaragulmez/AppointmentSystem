@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 abstract class simpleDatabaseSample {
-    ArrayList<patient> patients = new ArrayList<patient>();
-    ArrayList<admin> admins = new ArrayList<admin>();
-    ArrayList<hospital> hospitals = new ArrayList<hospital>();
+    protected ArrayList<patient> patients = new ArrayList<patient>();
+    protected ArrayList<admin> admins = new ArrayList<admin>();
+    protected ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
     public void insertHospitalSample(){
         hospital bezmialem = new hospital("bezmialem", "valide sultan");
