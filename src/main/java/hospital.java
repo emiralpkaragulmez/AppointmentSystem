@@ -36,7 +36,7 @@ public class hospital {
 
         int x = 1;
         while (iterator.hasNext()){
-            System.out.print(x + "-) " + (iterator.next()).getName() + "\n");
+            System.out.print("\t" + x + "-) " + (iterator.next()).getName() + "\n");
             x++;
         }
     }

@@ -35,7 +35,7 @@ public class department {
         int x = 1;
 
         while (iterator.hasNext()){
-            System.out.print(x + "-) " + (iterator.next()).getName() + "\n");
+            System.out.println("\t" + x + "-) " + (iterator.next()).getName());
             x++;
         }
     }

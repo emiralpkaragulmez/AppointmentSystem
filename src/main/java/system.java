@@ -1,6 +1,8 @@
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class system {
 
@@ -12,8 +14,7 @@ public class system {
         adminSystem.insertHospitalSample();
 
 
-
-        patient selectedPatient;
+        patient selectedPatient = null;
         boolean quit = false;
         long patientId = 0;
         boolean patientVerified;
@@ -24,27 +25,43 @@ public class system {
         boolean takeAppointmentSelected;
         boolean viewInformation;
         admin selectedAdmin;
+        boolean runScenario = true;
 
 
         while (!quit) {
 
             viewInformation = false;
             takeAppointmentSelected = false;
-            selectedPatient = null;
             patientVerified = false;
             createNewPatient = false;
             adminVerified = false;
             adminId = 0;
             admin = false;
             selectedAdmin = null;
+            int chosenOption = 3;
 
-            System.out.print("""
-                    Enter your choice:\s
-                    \t1-) Patient Login
-                    \t2-) Admin login.
-                    \t""");
-            int chosenOption = scanner.nextInt();
 
+            if (runScenario == false) {
+                System.out.print("""
+                        Enter your choice:\s
+                        \t1-) Patient Login
+                        \t2-) Admin login.
+                        \t3-) Run 'Use Case 1' Scenario Again
+                        \t""");
+                chosenOption = scanner.nextInt();
+            }
+
+            if (chosenOption == 3) {
+                runScenario = true;
+                chosenOption = 1;
+                if (selectedPatient != null && selectedPatient.appointments.size() != 0) {
+                    selectedPatient.appointments.remove(0);
+                }
+                System.out.println("Patient comes to the kiosk at the hospital to take an appointment\n" +
+                        "Patient choose 'Take An Appointment choice'\n" + "Patient Enter ID : 33943443924\n");
+            }
+
+            selectedPatient = null;
 
             switch (chosenOption) {
 
@@ -54,9 +71,14 @@ public class system {
                     int counter = 0;
                     while (counter != 11) {
                         counter = 0;
-                        System.out.print("Enter your id: ");
-
-                        patientId = scanner.nextLong();
+                        if (runScenario == false) {
+                            System.out.print("Enter your id: ");
+                            patientId = scanner.nextLong();
+                        }
+                        if (runScenario) {
+                            String input = "33943443924";
+                            patientId = Long.parseLong(input);
+                        }
                         long tempId = patientId;
                         while (tempId > 0) {
                             tempId /= 10;
@@ -80,6 +102,7 @@ public class system {
                         System.out.println("Patient selected.");
                         break;
                     }
+                    System.out.println("There isn't any patient with the ID please fill your information to take an appointment ");
                     System.out.println("Please fill information section to take an appointment.");
                     createNewPatient = true;
                     break;
@@ -109,18 +132,45 @@ public class system {
             if (createNewPatient) {
 
                 String inputGender;
-                String inputName;
+                String inputName = "";
                 int inputAge;
-
+                System.out.println();
                 System.out.print("Please enter your full name: ");
-                scanner.nextLine();
-                inputName = scanner.nextLine();
+                if (runScenario == false) {
+                    scanner.nextLine();
+                    inputName = scanner.nextLine();
+                }
+                if (runScenario) {
+                    System.out.println();
+                    System.out.println("Patient entered his name 'Emir Alp Karagulmez'");
+                    inputName = "Emir Alp Karagulmez";
+                    System.out.println();
+                }
                 System.out.print("Please enter your age: ");
-                inputAge = scanner.nextInt();
-                System.out.print("Please enter your gender: ");
-                scanner.nextLine();
-                inputGender = scanner.nextLine();
+                inputAge = 0;
+                inputGender = "";
 
+                if (runScenario == false) {
+                    inputAge = scanner.nextInt();
+                }
+                if (runScenario) {
+                    System.out.println();
+                    System.out.println("Patient entered his age '22'");
+                    inputAge = 22;
+                    System.out.println();
+                }
+
+                System.out.print("Please enter your gender: ");
+                if (runScenario == false) {
+                    scanner.nextLine();
+                    inputGender = scanner.nextLine();
+                }
+                if (runScenario) {
+                    System.out.println();
+                    System.out.println("Patient entered his gender 'Male'");
+                    inputGender = "Male";
+                    System.out.println();
+                }
                 patientVerified = true;
                 selectedPatient = new patient(inputName, inputGender, patientId, inputAge);
                 adminSystem.patients.add(selectedPatient);
@@ -129,19 +179,26 @@ public class system {
             if (patientVerified) {
                 System.out.print("Enter your choice: \n" + "\t1-) Take an appointment.\n" + "\t2-) View appointments' information.\n\t");
                 boolean pass = false;
-                while (!pass) {
-                    int answer = scanner.nextInt();
-                    if (answer == 1) {
-                        takeAppointmentSelected = true;
-                        pass = true;
-                    } else if (answer == 2) {
-                        viewInformation = true;
-                        pass = true;
-                    } else
-                        System.out.println("Please enter significant digit.");
+                if (runScenario == false) {
+                    while (!pass) {
+                        int answer = scanner.nextInt();
+                        if (answer == 1) {
+                            takeAppointmentSelected = true;
+                            pass = true;
+                        } else if (answer == 2) {
+                            viewInformation = true;
+                            pass = true;
+                        } else
+                            System.out.println("Please enter significant digit.");
+                    }
+                }
+                if (runScenario) {
+                    System.out.print("Patient choosed first choice.");
+                    takeAppointmentSelected = true;
+                    pass = true;
+                    System.out.println();
                 }
             }
-
 
 
             if (takeAppointmentSelected) {
@@ -150,36 +207,76 @@ public class system {
                 while (!appointmentApproved) {
 
                     Iterator<hospital> iteratorHospital = adminSystem.hospitals.listIterator();
-
+                    System.out.println();
                     System.out.println("Enter your hospital: ");
                     int x = 1;
                     while (iteratorHospital.hasNext()) {
-                        System.out.print(x + "-) " + (iteratorHospital.next()).getName() + "\n");
+                        System.out.print("\t" + x + "-) " + (iteratorHospital.next()).getName() + "\n");
                         x++;
                     }
-                    int selectedHospital = scanner.nextInt() - 1;
+                    int selectedHospital = 0;
+                    if (runScenario == false) {
+                        selectedHospital = scanner.nextInt() - 1;
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed first choice.");
+                        System.out.println();
+                    }
                     hospital selectedAppointmentHospital = adminSystem.hospitals.get(selectedHospital);
 
                     System.out.println("Enter your department: ");
                     adminSystem.hospitals.get(selectedHospital).printDepartments();
-                    int selectedDepartment = scanner.nextInt() - 1;
+                    int selectedDepartment = 0;
+                    if (runScenario == false) {
+                        selectedDepartment = scanner.nextInt() - 1;
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed 'Interial Medicine' department");
+                        System.out.println();
+                    }
                     department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
 
-
-                    selectedAppointmentDepartment.printDoctors();
                     System.out.println("Enter your doctor: ");
-                    int selectedDoctor = scanner.nextInt() - 1;
+                    selectedAppointmentDepartment.printDoctors();
+                    int selectedDoctor = 1;
+                    if (runScenario == false) {
+                        selectedDoctor = scanner.nextInt() - 1;
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed 'IMRAN TOKMAKOGLU'");
+                        System.out.println();
+                    }
                     doctor selectedAppointmentDoctor = selectedAppointmentDepartment.doctors.get(selectedDoctor);
 
 
                     System.out.println("Enter the date you would like have an appointment.");
                     System.out.print("Enter appointment year (2022 or 2023): ");
-                    int chosenAppointmentYear = scanner.nextInt();
+                    int chosenAppointmentYear = 2023;
+                    if (runScenario == false) {
+                        chosenAppointmentYear = scanner.nextInt();
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed '2023'");
+                        System.out.println();
+                    }
                     System.out.print("Enter appointment month (1 to 12): ");
-                    int chosenAppointmentMonth = scanner.nextInt();
+                    int chosenAppointmentMonth = 3;
+                    if (runScenario == false) {
+                        chosenAppointmentMonth = scanner.nextInt();
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed '3'");
+                        System.out.println();
+                    }
                     System.out.print("Enter appointment day (1 to 30): ");
-                    int chosenAppointmentDay = scanner.nextInt();
-
+                    int chosenAppointmentDay = 25;
+                    if (runScenario == false) {
+                        chosenAppointmentDay = scanner.nextInt();
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed '25'");
+                        System.out.println();
+                    }
 
                     ArrayList<appointmentDate> availableAppointmentDates = selectedAppointmentDoctor.returnAvailableAppointmentsForSelectedDate(chosenAppointmentDay, chosenAppointmentMonth, chosenAppointmentYear);
                     Iterator<appointmentDate> printNamesOfAppointmentDates = availableAppointmentDates.listIterator();
@@ -188,8 +285,18 @@ public class system {
                         System.out.println(order + "-) " + printNamesOfAppointmentDates.next().getName());
                         order++;
                     }
+
                     System.out.println("Enter appointment you would like to choose: ");
-                    int chosenAppointmentDate = scanner.nextInt();
+
+                    int chosenAppointmentDate = 10;
+
+                    if (runScenario == false) {
+                        chosenAppointmentDate = scanner.nextInt();
+                    }
+                    if (runScenario) {
+                        System.out.println("Patient choosed '10'");
+                        System.out.println();
+                    }
                     appointmentDate selectedAppointmentDate = availableAppointmentDates.get(chosenAppointmentDate);
                     selectedAppointmentDate.setAvailable(false);
 
@@ -198,26 +305,41 @@ public class system {
                             selectedAppointmentDoctor.getName(), selectedAppointmentDate.getAppointmentDate()));
 
 
-                    selectedPatient.appointments.get(selectedPatient.getAppointmentCount() - 1).appointmentInfo();
+                    if (runScenario == false) {
+                        selectedPatient.appointments.get(selectedPatient.getAppointmentCount() - 1).appointmentInfo();
+                    }
+                    if (runScenario){
+                        selectedPatient.appointments.get(0).appointmentInfo();
+                    }
                     System.out.println("Is all appointment information is correct?");
-                    scanner.nextLine();
 
-                    boolean answerPass = false;
-                    while (!answerPass) {
-                        String isAnswerCorrect = scanner.nextLine();
+                    if (runScenario == false) {
+                        scanner.nextLine();
 
-                        if (isAnswerCorrect.equals("Yes")) {
-                            System.out.println("Your appointment has created?");
-                            appointmentApproved = true;
-                            answerPass = true;
+                        boolean answerPass = false;
+                        while (!answerPass) {
+                            String isAnswerCorrect = scanner.nextLine();
 
-                        } else if (isAnswerCorrect.equals("No")) {
-                            selectedPatient.appointments.remove(selectedPatient.getAppointmentCount() - 1);
-                            System.out.println("Please select new choices for appointment");
-                            answerPass = true;
-                        } else {
-                            System.out.println("Please answer with Yes or No.");
+                            if (isAnswerCorrect.equals("Yes")) {
+                                System.out.println("Your appointment has created.");
+                                appointmentApproved = true;
+                                answerPass = true;
+
+                            } else if (isAnswerCorrect.equals("No")) {
+                                selectedPatient.appointments.remove(selectedPatient.getAppointmentCount() - 1);
+                                System.out.println("Please select new choices for appointment");
+                                answerPass = true;
+                            } else {
+                                System.out.println("Please answer with Yes or No.");
+                            }
                         }
+                    }
+
+                    if (runScenario) {
+                        System.out.println("Patient said 'Yes'");
+                        appointmentApproved = true;
+                        runScenario = false;
+                        System.out.println();
                     }
                 }
             }
