@@ -1,8 +1,7 @@
-import javax.sound.midi.Soundbank;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class system {
 
@@ -35,13 +34,12 @@ public class system {
             patientVerified = false;
             createNewPatient = false;
             adminVerified = false;
-            adminId = 0;
             admin = false;
             selectedAdmin = null;
             int chosenOption = 3;
 
 
-            if (runScenario == false) {
+            if (!runScenario) {
                 System.out.print("""
                         Enter your choice:\s
                         \t1-) Patient Login
@@ -57,8 +55,11 @@ public class system {
                 if (selectedPatient != null && selectedPatient.appointments.size() != 0) {
                     selectedPatient.appointments.remove(0);
                 }
-                System.out.println("Patient comes to the kiosk at the hospital to take an appointment\n" +
-                        "Patient choose 'Take An Appointment choice'\n" + "Patient Enter ID : 33943443924\n");
+                System.out.println("""
+                        Patient comes to the kiosk at the hospital to take an appointment
+                        Patient choose 'Take An Appointment choice'
+                        Patient Enter ID : 33943443924
+                        """);
             }
 
             selectedPatient = null;
@@ -71,7 +72,7 @@ public class system {
                     int counter = 0;
                     while (counter != 11) {
                         counter = 0;
-                        if (runScenario == false) {
+                        if (!runScenario) {
                             System.out.print("Enter your id: ");
                             patientId = scanner.nextLong();
                         }
@@ -136,7 +137,7 @@ public class system {
                 int inputAge;
                 System.out.println();
                 System.out.print("Please enter your full name: ");
-                if (runScenario == false) {
+                if (!runScenario) {
                     scanner.nextLine();
                     inputName = scanner.nextLine();
                 }
@@ -150,7 +151,7 @@ public class system {
                 inputAge = 0;
                 inputGender = "";
 
-                if (runScenario == false) {
+                if (!runScenario) {
                     inputAge = scanner.nextInt();
                 }
                 if (runScenario) {
@@ -161,7 +162,7 @@ public class system {
                 }
 
                 System.out.print("Please enter your gender: ");
-                if (runScenario == false) {
+                if (!runScenario) {
                     scanner.nextLine();
                     inputGender = scanner.nextLine();
                 }
@@ -177,9 +178,13 @@ public class system {
             }
 
             if (patientVerified) {
-                System.out.print("Enter your choice: \n" + "\t1-) Take an appointment.\n" + "\t2-) View appointments' information.\n\t");
+                System.out.print("""
+                        Enter your choice:\s
+                        \t1-) Take an appointment.
+                        \t2-) View appointments' information.
+                        \t""");
                 boolean pass = false;
-                if (runScenario == false) {
+                if (!runScenario) {
                     while (!pass) {
                         int answer = scanner.nextInt();
                         if (answer == 1) {
@@ -215,7 +220,7 @@ public class system {
                         x++;
                     }
                     int selectedHospital = 0;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         selectedHospital = scanner.nextInt() - 1;
                     }
                     if (runScenario) {
@@ -227,7 +232,7 @@ public class system {
                     System.out.println("Enter your department: ");
                     adminSystem.hospitals.get(selectedHospital).printDepartments();
                     int selectedDepartment = 0;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         selectedDepartment = scanner.nextInt() - 1;
                     }
                     if (runScenario) {
@@ -239,7 +244,7 @@ public class system {
                     System.out.println("Enter your doctor: ");
                     selectedAppointmentDepartment.printDoctors();
                     int selectedDoctor = 1;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         selectedDoctor = scanner.nextInt() - 1;
                     }
                     if (runScenario) {
@@ -252,7 +257,7 @@ public class system {
                     System.out.println("Enter the date you would like have an appointment.");
                     System.out.print("Enter appointment year (2022 or 2023): ");
                     int chosenAppointmentYear = 2023;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         chosenAppointmentYear = scanner.nextInt();
                     }
                     if (runScenario) {
@@ -261,7 +266,7 @@ public class system {
                     }
                     System.out.print("Enter appointment month (1 to 12): ");
                     int chosenAppointmentMonth = 3;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         chosenAppointmentMonth = scanner.nextInt();
                     }
                     if (runScenario) {
@@ -270,7 +275,7 @@ public class system {
                     }
                     System.out.print("Enter appointment day (1 to 30): ");
                     int chosenAppointmentDay = 25;
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         chosenAppointmentDay = scanner.nextInt();
                     }
                     if (runScenario) {
@@ -290,7 +295,7 @@ public class system {
 
                     int chosenAppointmentDate = 10;
 
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         chosenAppointmentDate = scanner.nextInt();
                     }
                     if (runScenario) {
@@ -305,7 +310,7 @@ public class system {
                             selectedAppointmentDoctor.getName(), selectedAppointmentDate.getAppointmentDate()));
 
 
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         selectedPatient.appointments.get(selectedPatient.getAppointmentCount() - 1).appointmentInfo();
                     }
                     if (runScenario){
@@ -313,7 +318,7 @@ public class system {
                     }
                     System.out.println("Is all appointment information is correct?");
 
-                    if (runScenario == false) {
+                    if (!runScenario) {
                         scanner.nextLine();
 
                         boolean answerPass = false;
