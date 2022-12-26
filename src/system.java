@@ -38,7 +38,11 @@ public class system {
             admin = false;
             selectedAdmin = null;
 
-            System.out.print("Enter your choice: \n" + "\t1-) Patient Login\n" + "\t2-) Admin login.\n\t");
+            System.out.print("""
+                    Enter your choice:\s
+                    \t1-) Patient Login
+                    \t2-) Admin login.
+                    \t""");
             int chosenOption = scanner.nextInt();
 
 

@@ -6,21 +6,24 @@ abstract class simpleDatabaseSample {
     protected ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
     public void insertHospitalSample(){
-        hospital bezmialem = new hospital("bezmialem", "valide sultan");
-        hospitals.add(bezmialem);
+        hospital yunusEmreDevletHastanesi = new hospital("Yunus Emre Devlet Hastanesi", "valide sultan");
+        hospitals.add(yunusEmreDevletHastanesi);
 
 
-        bezmialem.addDepartment("Dahiliye"); // index 0 department
-        bezmialem.addDepartment("KBB");      // index 1 department
-        bezmialem.addDepartment("Üroloji");  // index 2 department
+        yunusEmreDevletHastanesi.addDepartment("Internal Medicine"); // index 0 department
+        yunusEmreDevletHastanesi.addDepartment("Neurology");      // index 1 department
+        yunusEmreDevletHastanesi.addDepartment("Cardiology");  // index 2 department
 
 
-        bezmialem.departments.get(0).addDoctor("muzaffer", 40,10,"erkek");
-        bezmialem.departments.get(0).addDoctor("ayşe", 40,10,"erkek");
-        bezmialem.departments.get(1).addDoctor("asya", 40,10,"erkek");
-        bezmialem.departments.get(1).addDoctor("emir", 40,10,"erkek");
-        bezmialem.departments.get(2).addDoctor("mustafa", 40,10,"erkek");
-        bezmialem.departments.get(2).addDoctor("ayberk", 40,10,"erkek");
+        yunusEmreDevletHastanesi.departments.get(0).addDoctor("\t\n" +
+                "BUĞRA ÖZKAN", 35,10,"Male");
+        yunusEmreDevletHastanesi.departments.get(0).addDoctor("İMRAN TOKMAKOĞLU", 40,14,"Male");
+        yunusEmreDevletHastanesi.departments.get(1).addDoctor("\t\n" +
+                "ADEM İLTER UYSAL", 40,15,"Male");
+        yunusEmreDevletHastanesi.departments.get(1).addDoctor("SAADET TAŞTABAN", 40,15,"Female");
+        yunusEmreDevletHastanesi.departments.get(2).addDoctor("\t\n" +
+                "MUHAMMED ERZURUM", 35,10,"Male");
+        yunusEmreDevletHastanesi.departments.get(2).addDoctor("MESUT PAK", 40,13,"erkek");
 
     }
 
