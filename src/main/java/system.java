@@ -160,9 +160,8 @@ public class system {
                     int selectedHospital = scanner.nextInt() - 1;
                     hospital selectedAppointmentHospital = adminSystem.hospitals.get(selectedHospital);
 
-
-                    adminSystem.hospitals.get(selectedHospital).printDepartments();
                     System.out.println("Enter your department: ");
+                    adminSystem.hospitals.get(selectedHospital).printDepartments();
                     int selectedDepartment = scanner.nextInt() - 1;
                     department selectedAppointmentDepartment = selectedAppointmentHospital.departments.get(selectedDepartment);
 

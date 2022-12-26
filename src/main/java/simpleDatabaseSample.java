@@ -6,7 +6,7 @@ abstract class simpleDatabaseSample {
     protected ArrayList<hospital> hospitals = new ArrayList<hospital>();
 
     public void insertHospitalSample(){
-        hospital yunusEmreDevletHastanesi = new hospital("Yunus Emre Devlet Hastanesi", "valide sultan");
+        hospital yunusEmreDevletHastanesi = new hospital("Yunus Emre Hospital", "Yunus Emre");
         hospitals.add(yunusEmreDevletHastanesi);
 
 
@@ -16,14 +16,14 @@ abstract class simpleDatabaseSample {
 
 
         yunusEmreDevletHastanesi.departments.get(0).addDoctor("\t\n" +
-                "BUĞRA ÖZKAN", 35,10,"Male");
-        yunusEmreDevletHastanesi.departments.get(0).addDoctor("İMRAN TOKMAKOĞLU", 40,14,"Male");
+                "BUGRA OZKAN", 35,10,"Male");
+        yunusEmreDevletHastanesi.departments.get(0).addDoctor("IMRAN TOKMAKOGLU", 40,14,"Male");
         yunusEmreDevletHastanesi.departments.get(1).addDoctor("\t\n" +
-                "ADEM İLTER UYSAL", 40,15,"Male");
-        yunusEmreDevletHastanesi.departments.get(1).addDoctor("SAADET TAŞTABAN", 40,15,"Female");
+                "ADEM ILTER UYSAL", 40,15,"Male");
+        yunusEmreDevletHastanesi.departments.get(1).addDoctor("SAADET TASTABAN", 40,15,"Female");
         yunusEmreDevletHastanesi.departments.get(2).addDoctor("\t\n" +
                 "MUHAMMED ERZURUM", 35,10,"Male");
-        yunusEmreDevletHastanesi.departments.get(2).addDoctor("MESUT PAK", 40,13,"erkek");
+        yunusEmreDevletHastanesi.departments.get(2).addDoctor("MESUT PAK", 40,13,"Male");
 
     }
 

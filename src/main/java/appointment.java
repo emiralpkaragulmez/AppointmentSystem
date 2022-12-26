@@ -35,6 +35,6 @@ public class appointment {
 
     public  void appointmentInfo(){
         System.out.println("You have an appointment in " + departmentName + " at " + appointmentDate + " from " +
-                doctorName + ".");
+                doctorName + appointmentDate + ".");
     }
 }
